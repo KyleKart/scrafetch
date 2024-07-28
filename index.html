@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrafetch</title>
+    <title>Neowofetch</title>
     <style>
         body {
             background-color: #1e1e1e;
@@ -17,7 +17,7 @@
             margin: 0;
         }
 
-        .scrafetch {
+        .neowofetch {
             display: flex;
             align-items: flex-start;
         }
@@ -25,7 +25,6 @@
         .ascii-art {
             color: #6A9FB5;
             margin-right: 20px;
-            white-space: pre-wrap; /* Preserve white space and handle line breaks */
         }
 
         .info {
@@ -38,9 +37,13 @@
     </style>
 </head>
 <body>
-    <div class="scrafetch">
-        <div class="ascii-art" id="ascii-art">
-            <!-- ASCII art will be dynamically inserted here -->
+    <div class="neowofetch">
+        <div class="ascii-art">
+            <pre>
+ /\_/\  
+( o.o ) 
+ > ^ <
+            </pre>
         </div>
         <div class="info" id="info">
             <!-- Content will be dynamically inserted here -->
@@ -54,12 +57,12 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        function generateScrafetchHtml(data) {
+        function generateNeowofetchHtml(data) {
             return `
                 <pre>
-<b>OS:</b>       ${getUrlParameter('OS')}<br>
-<b>Host:</b>     ${getUrlParameter('Host')}<br>
-<b>Kernel:</b>   ${getUrlParameter('Kernel')}<br>
+<b>OS:</b>       ${data.OS}<br>
+<b>Host:</b>     ${data.Host}<br>
+<b>Kernel:</b>   ${data.Kernel}<br>
 <b>Uptime:</b>   ${data.Uptime}<br>
 <b>Packages:</b> ${data.Packages}<br>
 <b>Shell:</b>    ${data.Shell}<br>
@@ -91,17 +94,10 @@
             Terminal: getUrlParameter('Terminal') || 'Unknown Terminal',
             CPU: getUrlParameter('CPU') || 'Unknown CPU',
             GPU: getUrlParameter('GPU') || 'Unknown GPU',
-            Memory: getUrlParameter('Memory') || 'Unknown Memory',
-            AsciiArt: getUrlParameter('AsciiArt') || ' /\\_/\\  \n( o.o ) \n > ^ < '
+            Memory: getUrlParameter('Memory') || 'Unknown Memory'
         };
 
-        // Convert new lines in ASCII art to actual line breaks in HTML
-        function formatAsciiArt(asciiArt) {
-            return asciiArt.replace(/\n/g, '<br>');
-        }
-
-        document.getElementById('info').innerHTML = generateScrafetchHtml(data);
-        document.getElementById('ascii-art').innerHTML = `<pre>${formatAsciiArt(data.AsciiArt)}</pre>`;
+        document.getElementById('info').innerHTML = generateNeowofetchHtml(data);
     </script>
 </body>
 </html>

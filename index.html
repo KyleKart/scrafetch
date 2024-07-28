@@ -5,23 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scrafetch</title>
     <style>
+        /* Basic reset for padding and margins */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background-color: #1e1e1e;
             color: #c5c8c6;
             font-family: 'Courier New', Courier, monospace;
-            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            width: 100vw;
             margin: 0;
-            overflow: hidden; /* Prevent scrollbars from appearing */
+            overflow: hidden; /* Prevent scrollbars */
         }
 
         .scrafetch {
             display: flex;
             align-items: flex-start;
-            max-width: 100%; /* Ensure content does not exceed viewport width */
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            max-width: 100%; /* Ensure content fits within the viewport */
+            padding: 20px;
             overflow: hidden; /* Prevent overflow */
         }
 
@@ -33,6 +42,7 @@
         .info {
             line-height: 1.5;
             color: #c5c8c6;
+            overflow: hidden; /* Prevent overflow within the info section */
         }
 
         .info div {
@@ -41,6 +51,19 @@
 
         .info b {
             color: #f0f0f0; /* Ensure labels are visible */
+        }
+
+        @media (max-width: 600px) {
+            .scrafetch {
+                flex-direction: column; /* Stack items vertically on small screens */
+                align-items: center; /* Center align content */
+                text-align: center; /* Center text for readability */
+            }
+
+            .ascii-art {
+                margin-right: 0; /* Remove margin on small screens */
+                margin-bottom: 10px; /* Add space below the ASCII art */
+            }
         }
     </style>
 </head>

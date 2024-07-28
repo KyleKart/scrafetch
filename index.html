@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neowofetch</title>
+    <title>Scrafetch</title>
     <style>
         body {
             background-color: #1e1e1e;
@@ -17,7 +17,7 @@
             margin: 0;
         }
 
-        .neowofetch {
+        .scrafetch {
             display: flex;
             align-items: flex-start;
         }
@@ -32,14 +32,17 @@
             color: #c5c8c6;
         }
 
-        .info pre {
-            margin: 0;
-            white-space: pre-wrap; /* Preserve whitespace and line breaks */
+        .info div {
+            margin-bottom: 5px; /* Adjust spacing between lines */
+        }
+
+        .info b {
+            color: #f0f0f0; /* Ensure labels are visible */
         }
     </style>
 </head>
 <body>
-    <div class="neowofetch">
+    <div class="scrafetch">
         <div class="ascii-art">
             <pre id="ascii-art">
  /\_/\  
@@ -47,24 +50,8 @@
  > ^ <
             </pre>
         </div>
-        <div class="info">
-            <pre id="info">
-<b>OS:</b>       
-<b>Host:</b>     
-<b>Kernel:</b>   
-<b>Uptime:</b>   
-<b>Packages:</b> 
-<b>Shell:</b>    
-<b>Resolution:</b>
-<b>DE:</b>       
-<b>WM:</b>       
-<b>Theme:</b>    
-<b>Icons:</b>    
-<b>Terminal:</b> 
-<b>CPU:</b>      
-<b>GPU:</b>      
-<b>Memory:</b>   
-            </pre>
+        <div class="info" id="info">
+            <!-- Content will be dynamically inserted here -->
         </div>
     </div>
     <script>
@@ -99,7 +86,7 @@
 
             let infoContent = '';
             for (const [key, value] of Object.entries(data)) {
-                infoContent += `<b>${key}:</b> ${value}<br>\n`;
+                infoContent += `<div><b>${key}:</b> ${value}</div>\n`;
             }
 
             info.innerHTML = infoContent;

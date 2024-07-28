@@ -15,26 +15,28 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scroll bars */
         }
 
         .scrafetch {
             display: flex;
             align-items: flex-start;
-            flex-direction: row; /* Ensure items are in a row */
-            gap: 20px; /* Add spacing between items */
-            max-width: 90vw; /* Prevent overflowing */
-            overflow: auto; /* Handle overflow if content is too large */
+            gap: 20px;
+            max-width: 90vw;
+            overflow: auto;
         }
 
         .ascii-art {
             color: #6A9FB5;
-            white-space: pre-wrap; /* Preserve white space and handle line breaks */
+            white-space: pre; /* Preserve formatting, including line breaks */
+            margin: 0;
         }
 
         .info {
-            line-height: 1.5;
             color: #c5c8c6;
-            max-width: 400px; /* Constrain width to ensure readability */
+            line-height: 1.5;
+            max-width: 400px;
+            margin: 0;
         }
 
         .info pre {
@@ -97,16 +99,11 @@
             CPU: getUrlParameter('CPU') || 'Unknown CPU',
             GPU: getUrlParameter('GPU') || 'Unknown GPU',
             Memory: getUrlParameter('Memory') || 'Unknown Memory',
-            AsciiArt: getUrlParameter('AsciiArt') || ' /\\_/\\  \n( o.o ) \n > ^ < '
+            AsciiArt: getUrlParameter('AsciiArt') || '/\\_/\\\n( o.o )\n > ^ <'
         };
 
-        // Convert new lines in ASCII art to actual line breaks in HTML
-        function formatAsciiArt(asciiArt) {
-            return asciiArt.replace(/\n/g, '<br>');
-        }
-
         document.getElementById('info').innerHTML = generateScrafetchHtml(data);
-        document.getElementById('ascii-art').innerHTML = `<pre>${formatAsciiArt(data.AsciiArt)}</pre>`;
+        document.getElementById('ascii-art').innerText = data.AsciiArt; // Use innerText for ASCII art
     </script>
 </body>
 </html>

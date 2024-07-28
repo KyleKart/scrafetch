@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neowofetch</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #c5c8c6;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .neowofetch {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .ascii-art {
+            color: #6A9FB5;
+            margin-right: 20px;
+        }
+
+        .info {
+            line-height: 1.5;
+        }
+
+        .info pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="neowofetch">
+        <div class="ascii-art">
+            <pre>
+ /\_/\  
+( o.o ) 
+ > ^ <
+            </pre>
+        </div>
+        <div class="info">
+            <pre id="info">
+<b>OS:</b>       
+<b>Host:</b>     
+<b>Kernel:</b>   
+<b>Uptime:</b>   
+<b>Packages:</b> 
+<b>Shell:</b>    
+<b>Resolution:</b>
+<b>DE:</b>       
+<b>WM:</b>       
+<b>Theme:</b>    
+<b>Icons:</b>    
+<b>Terminal:</b> 
+<b>CPU:</b>      
+<b>GPU:</b>      
+<b>Memory:</b>   
+            </pre>
+        </div>
+    </div>
+    <script>
+        // Function to fill in the data
+        function fillData() {
+            const info = document.getElementById('info');
+            const data = {
+                OS: 'Ubuntu 20.04 LTS x86_64',
+                Host: 'Custom-PC',
+                Kernel: '5.4.0-65-generic',
+                Uptime: '5 hours, 32 mins',
+                Packages: '1532 (dpkg), 20 (snap)',
+                Shell: 'bash 5.0.17',
+                Resolution: '1920x1080',
+                DE: 'GNOME 3.36.8',
+                WM: 'Mutter',
+                Theme: 'Yaru-dark [GTK2/3]',
+                Icons: 'Yaru [GTK2/3]',
+                Terminal: 'gnome-terminal',
+                CPU: 'Intel i7-9700K (8) @ 4.900GHz',
+                GPU: 'NVIDIA GeForce GTX 1660 Ti',
+                Memory: '16GB'
+            };
+
+            let infoContent = '';
+            for (const [key, value] of Object.entries(data)) {
+                infoContent += `<b>${key}:</b> ${value}\n`;
+            }
+
+            info.innerHTML = infoContent;
+        }
+
+        // Call the function to fill in the data
+        fillData();
+    </script>
+</body>
+</html>

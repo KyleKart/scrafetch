@@ -45,59 +45,58 @@
  > ^ <
             </pre>
         </div>
-        <div class="info" id="info">
-            <!-- Content will be dynamically inserted here -->
+        <div class="info">
+            <pre id="info">
+<b>OS:</b>       
+<b>Host:</b>     
+<b>Kernel:</b>   
+<b>Uptime:</b>   
+<b>Packages:</b> 
+<b>Shell:</b>    
+<b>Resolution:</b>
+<b>DE:</b>       
+<b>WM:</b>       
+<b>Theme:</b>    
+<b>Icons:</b>    
+<b>Terminal:</b> 
+<b>CPU:</b>      
+<b>GPU:</b>      
+<b>Memory:</b>   
+            </pre>
         </div>
     </div>
     <script>
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        // Function to fill in the data
+        function fillData() {
+            const info = document.getElementById('info');
+            const data = {
+                OS: 'Ubuntu 20.04 LTS x86_64',
+                Host: 'Custom-PC',
+                Kernel: '5.4.0-65-generic',
+                Uptime: '5 hours, 32 mins',
+                Packages: '1532 (dpkg), 20 (snap)',
+                Shell: 'bash 5.0.17',
+                Resolution: '1920x1080',
+                DE: 'GNOME 3.36.8',
+                WM: 'Mutter',
+                Theme: 'Yaru-dark [GTK2/3]',
+                Icons: 'Yaru [GTK2/3]',
+                Terminal: 'gnome-terminal',
+                CPU: 'Intel i7-9700K (8) @ 4.900GHz',
+                GPU: 'NVIDIA GeForce GTX 1660 Ti',
+                Memory: '16GB'
+            };
+
+            let infoContent = '';
+            for (const [key, value] of Object.entries(data)) {
+                infoContent += `<b>${key}:</b> ${value}\n`;
+            }
+
+            info.innerHTML = infoContent;
         }
 
-        function generateNeowofetchHtml(data) {
-            return `
-                <pre>
-<b>OS:</b>       ${data.OS}<br>
-<b>Host:</b>     ${data.Host}<br>
-<b>Kernel:</b>   ${data.Kernel}<br>
-<b>Uptime:</b>   ${data.Uptime}<br>
-<b>Packages:</b> ${data.Packages}<br>
-<b>Shell:</b>    ${data.Shell}<br>
-<b>Resolution:</b> ${data.Resolution}<br>
-<b>DE:</b>       ${data.DE}<br>
-<b>WM:</b>       ${data.WM}<br>
-<b>Theme:</b>    ${data.Theme}<br>
-<b>Icons:</b>    ${data.Icons}<br>
-<b>Terminal:</b> ${data.Terminal}<br>
-<b>CPU:</b>      ${data.CPU}<br>
-<b>GPU:</b>      ${data.GPU}<br>
-<b>Memory:</b>   ${data.Memory}<br>
-                </pre>
-            `;
-        }
-
-        const data = {
-            OS: getUrlParameter('OS') || 'Unknown OS',
-            Host: getUrlParameter('Host') || 'Unknown Host',
-            Kernel: getUrlParameter('Kernel') || 'Unknown Kernel',
-            Uptime: getUrlParameter('Uptime') || 'Unknown Uptime',
-            Packages: getUrlParameter('Packages') || 'Unknown Packages',
-            Shell: getUrlParameter('Shell') || 'Unknown Shell',
-            Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
-            DE: getUrlParameter('DE') || 'Unknown DE',
-            WM: getUrlParameter('WM') || 'Unknown WM',
-            Theme: getUrlParameter('Theme') || 'Unknown Theme',
-            Icons: getUrlParameter('Icons') || 'Unknown Icons',
-            Terminal: getUrlParameter('Terminal') || 'Unknown Terminal',
-            CPU: getUrlParameter('CPU') || 'Unknown CPU',
-            GPU: getUrlParameter('GPU') || 'Unknown GPU',
-            Memory: getUrlParameter('Memory') || 'Unknown Memory'
-        };
-
-        document.getElementById('info').innerHTML = generateNeowofetchHtml(data);
+        // Call the function to fill in the data
+        fillData();
     </script>
 </body>
 </html>

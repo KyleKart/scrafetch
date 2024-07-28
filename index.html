@@ -15,28 +15,21 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden; /* Prevent scroll bars */
         }
 
         .scrafetch {
             display: flex;
             align-items: flex-start;
-            gap: 20px;
-            max-width: 90vw;
-            overflow: auto;
         }
 
         .ascii-art {
             color: #6A9FB5;
-            white-space: pre; /* Preserve formatting, including line breaks */
-            margin: 0;
+            margin-right: 20px;
+            white-space: pre-wrap; /* Preserve white space and handle line breaks */
         }
 
         .info {
-            color: #c5c8c6;
             line-height: 1.5;
-            max-width: 400px;
-            margin: 0;
         }
 
         .info pre {
@@ -64,9 +57,9 @@
         function generateScrafetchHtml(data) {
             return `
                 <pre>
-<b>OS:</b>       ${data.OS}<br>
-<b>Host:</b>     ${data.Host}<br>
-<b>Kernel:</b>   ${data.Kernel}<br>
+<b>OS:</b>       ${getUrlParameter('OS')}<br>
+<b>Host:</b>     ${getUrlParameter('Host')}<br>
+<b>Kernel:</b>   ${getUrlParameter('Kernel')}<br>
 <b>Uptime:</b>   ${data.Uptime}<br>
 <b>Packages:</b> ${data.Packages}<br>
 <b>Shell:</b>    ${data.Shell}<br>
@@ -99,11 +92,16 @@
             CPU: getUrlParameter('CPU') || 'Unknown CPU',
             GPU: getUrlParameter('GPU') || 'Unknown GPU',
             Memory: getUrlParameter('Memory') || 'Unknown Memory',
-            AsciiArt: getUrlParameter('AsciiArt') || '/\\_/\\\n( o.o )\n > ^ <'
+            AsciiArt: getUrlParameter('AsciiArt') || ' /\\_/\\  \n( o.o ) \n > ^ < '
         };
 
+        // Convert new lines in ASCII art to actual line breaks in HTML
+        function formatAsciiArt(asciiArt) {
+            return asciiArt.replace(/\n/g, '<br>');
+        }
+
         document.getElementById('info').innerHTML = generateScrafetchHtml(data);
-        document.getElementById('ascii-art').innerText = data.AsciiArt; // Use innerText for ASCII art
+        document.getElementById('ascii-art').innerHTML = `<pre>${formatAsciiArt(data.AsciiArt)}</pre>`;
     </script>
 </body>
 </html>

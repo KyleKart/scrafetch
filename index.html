@@ -15,11 +15,14 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scrollbars from appearing */
         }
 
         .scrafetch {
             display: flex;
             align-items: flex-start;
+            max-width: 100%; /* Ensure content does not exceed viewport width */
+            overflow: hidden; /* Prevent overflow */
         }
 
         .ascii-art {

@@ -20,16 +20,21 @@
         .scrafetch {
             display: flex;
             align-items: flex-start;
+            flex-direction: row; /* Ensure items are in a row */
+            gap: 20px; /* Add spacing between items */
+            max-width: 90vw; /* Prevent overflowing */
+            overflow: auto; /* Handle overflow if content is too large */
         }
 
         .ascii-art {
             color: #6A9FB5;
-            margin-right: 20px;
-            white-space: pre; /* Preserve white space and line breaks */
+            white-space: pre-wrap; /* Preserve white space and handle line breaks */
         }
 
         .info {
             line-height: 1.5;
+            color: #c5c8c6;
+            max-width: 400px; /* Constrain width to ensure readability */
         }
 
         .info pre {
@@ -95,8 +100,13 @@
             AsciiArt: getUrlParameter('AsciiArt') || ' /\\_/\\  \n( o.o ) \n > ^ < '
         };
 
+        // Convert new lines in ASCII art to actual line breaks in HTML
+        function formatAsciiArt(asciiArt) {
+            return asciiArt.replace(/\n/g, '<br>');
+        }
+
         document.getElementById('info').innerHTML = generateScrafetchHtml(data);
-        document.getElementById('ascii-art').innerHTML = `<pre>${data.AsciiArt}</pre>`;
+        document.getElementById('ascii-art').innerHTML = `<pre>${formatAsciiArt(data.AsciiArt)}</pre>`;
     </script>
 </body>
 </html>

@@ -29,17 +29,19 @@
 
         .info {
             line-height: 1.5;
+            color: #c5c8c6;
         }
 
         .info pre {
             margin: 0;
+            white-space: pre-wrap; /* Preserve whitespace and line breaks */
         }
     </style>
 </head>
 <body>
     <div class="neowofetch">
         <div class="ascii-art">
-            <pre>
+            <pre id="ascii-art">
  /\_/\  
 ( o.o ) 
  > ^ <
@@ -66,30 +68,38 @@
         </div>
     </div>
     <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
         // Function to fill in the data
         function fillData() {
             const info = document.getElementById('info');
             const data = {
-                OS: 'Ubuntu 20.04 LTS x86_64',
-                Host: 'Custom-PC',
-                Kernel: '5.4.0-65-generic',
-                Uptime: '5 hours, 32 mins',
-                Packages: '1532 (dpkg), 20 (snap)',
-                Shell: 'bash 5.0.17',
-                Resolution: '1920x1080',
-                DE: 'GNOME 3.36.8',
-                WM: 'Mutter',
-                Theme: 'Yaru-dark [GTK2/3]',
-                Icons: 'Yaru [GTK2/3]',
-                Terminal: 'gnome-terminal',
-                CPU: 'Intel i7-9700K (8) @ 4.900GHz',
-                GPU: 'NVIDIA GeForce GTX 1660 Ti',
-                Memory: '16GB'
+                OS: getUrlParameter('OS') || 'Unknown OS',
+                Host: getUrlParameter('Host') || 'Unknown Host',
+                Kernel: getUrlParameter('Kernel') || 'Unknown Kernel',
+                Uptime: getUrlParameter('Uptime') || 'Unknown Uptime',
+                Packages: getUrlParameter('Packages') || 'Unknown Packages',
+                Shell: getUrlParameter('Shell') || 'Unknown Shell',
+                Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
+                DE: getUrlParameter('DE') || 'Unknown DE',
+                WM: getUrlParameter('WM') || 'Unknown WM',
+                Theme: getUrlParameter('Theme') || 'Unknown Theme',
+                Icons: getUrlParameter('Icons') || 'Unknown Icons',
+                Terminal: getUrlParameter('Terminal') || 'Unknown Terminal',
+                CPU: getUrlParameter('CPU') || 'Unknown CPU',
+                GPU: getUrlParameter('GPU') || 'Unknown GPU',
+                Memory: getUrlParameter('Memory') || 'Unknown Memory'
             };
 
             let infoContent = '';
             for (const [key, value] of Object.entries(data)) {
-                infoContent += `<b>${key}:</b> ${value}\n`;
+                infoContent += `<b>${key}:</b> ${value}<br>\n`;
             }
 
             info.innerHTML = infoContent;

@@ -25,6 +25,7 @@
         .ascii-art {
             color: #6A9FB5;
             margin-right: 20px;
+            white-space: pre; /* Preserve white space and line breaks */
         }
 
         .info {
@@ -91,7 +92,7 @@
             CPU: getUrlParameter('CPU') || 'Unknown CPU',
             GPU: getUrlParameter('GPU') || 'Unknown GPU',
             Memory: getUrlParameter('Memory') || 'Unknown Memory',
-            AsciiArt: getUrlParameter('AsciiArt') || ' /\_/\  \n( o.o ) \n > ^ < '
+            AsciiArt: getUrlParameter('AsciiArt') || ' /\\_/\\  \n( o.o ) \n > ^ < '
         };
 
         document.getElementById('info').innerHTML = generateScrafetchHtml(data);

@@ -68,20 +68,10 @@
             const info = document.getElementById('info');
             const data = {
                 OS: getUrlParameter('OS') || 'Unknown OS',
-                Host: getUrlParameter('Host') || 'Unknown Host',
-                Kernel: getUrlParameter('Kernel') || 'Unknown Kernel',
-                Uptime: getUrlParameter('Uptime') || 'Unknown Uptime',
-                Packages: getUrlParameter('Packages') || 'Unknown Packages',
-                Shell: getUrlParameter('Shell') || 'Unknown Shell',
+                Browser: getUrlParameter('Browser') || 'Unknown Browser',
+                Memory: getUrlParameter('Memory') || 'Unknown Memory',
                 Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
-                DE: getUrlParameter('DE') || 'Unknown DE',
-                WM: getUrlParameter('WM') || 'Unknown WM',
-                Theme: getUrlParameter('Theme') || 'Unknown Theme',
-                Icons: getUrlParameter('Icons') || 'Unknown Icons',
-                Terminal: getUrlParameter('Terminal') || 'Unknown Terminal',
-                CPU: getUrlParameter('CPU') || 'Unknown CPU',
-                GPU: getUrlParameter('GPU') || 'Unknown GPU',
-                Memory: getUrlParameter('Memory') || 'Unknown Memory'
+                Editor: getUrlParameter('Editor') || 'Unknown Editor'
             };
 
             let infoContent = '';

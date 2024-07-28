@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neowofetch</title>
+    <title>Scrafetch</title>
     <style>
         body {
             background-color: #1e1e1e;
@@ -17,7 +17,7 @@
             margin: 0;
         }
 
-        .neowofetch {
+        .scrafetch {
             display: flex;
             align-items: flex-start;
         }
@@ -37,7 +37,7 @@
     </style>
 </head>
 <body>
-    <div class="neowofetch">
+    <div class="scrafetch">
         <div class="ascii-art" id="ascii-art">
             <!-- ASCII art will be dynamically inserted here -->
         </div>
@@ -53,7 +53,7 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        function generateNeowofetchHtml(data) {
+        function generateScrafetchHtml(data) {
             return `
                 <pre>
 <b>OS:</b>       ${data.OS}<br>
@@ -94,7 +94,7 @@
             AsciiArt: getUrlParameter('AsciiArt') || ' /\_/\  \n( o.o ) \n > ^ < '
         };
 
-        document.getElementById('info').innerHTML = generateNeowofetchHtml(data);
+        document.getElementById('info').innerHTML = generateScrafetchHtml(data);
         document.getElementById('ascii-art').innerHTML = `<pre>${data.AsciiArt}</pre>`;
     </script>
 </body>

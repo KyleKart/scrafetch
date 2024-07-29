@@ -78,6 +78,9 @@
             <!-- Content will be dynamically inserted here -->
         </div>
     </div>
+    <div id="output-html" style="display:none;">
+        <!-- Complete HTML will be displayed here -->
+    </div>
     <script>
         // Function to get URL parameters
         function getUrlParameter(name) {
@@ -91,6 +94,7 @@
         function fillData() {
             const info = document.getElementById('info');
             const asciiArt = document.getElementById('ascii-art');
+            const outputHtml = document.getElementById('output-html');
             const data = {
                 OS: getUrlParameter('OS') || 'Unknown OS',
                 Browser: getUrlParameter('Browser') || 'Unknown Browser',
@@ -112,6 +116,93 @@
             }
 
             info.innerHTML = infoContent;
+
+            // Generate and display the complete HTML
+            const completeHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperfetch</title>
+    <style>
+        /* Basic reset for padding and margins */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1e1e1e;
+            color: #c5c8c6;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        .hyperfetch {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            max-width: 100%; /* Ensure content fits within the viewport */
+            padding: 20px;
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        .ascii-art {
+            color: #6A9FB5;
+            margin-right: 20px;
+        }
+
+        .info {
+            line-height: 1.5;
+            color: #c5c8c6;
+            overflow: hidden; /* Prevent overflow within the info section */
+        }
+
+        .info div {
+            margin-bottom: 5px; /* Adjust spacing between lines */
+        }
+
+        .info b {
+            color: #f0f0f0; /* Ensure labels are visible */
+        }
+
+        @media (max-width: 600px) {
+            .hyperfetch {
+                flex-direction: column; /* Stack items vertically on small screens */
+                align-items: center; /* Center align content */
+                text-align: center; /* Center text for readability */
+            }
+
+            .ascii-art {
+                margin-right: 0; /* Remove margin on small screens */
+                margin-bottom: 10px; /* Add space below the ASCII art */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hyperfetch">
+        <div class="ascii-art">
+            <pre>
+${asciiArt.textContent.trim()}
+            </pre>
+        </div>
+        <div class="info">
+${infoContent}
+        </div>
+    </div>
+</body>
+</html>`;
+
+            outputHtml.textContent = completeHtml;
         }
 
         // Call the function to fill in the data

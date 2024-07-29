@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hyperfetch Console</title>
+    <title>Console</title>
     <style>
         /* Basic reset for padding and margins */
         *, *::before, *::after {
@@ -32,6 +32,8 @@
             flex-direction: column;
             padding: 20px;
             overflow: auto;
+            background-color: #2e2e2e;
+            color: #c5c8c6;
         }
 
         .output {
@@ -67,6 +69,11 @@
             color: #666;
         }
 
+        .ascii-art {
+            color: #6A9FB5;
+            margin-bottom: 10px;
+        }
+
         @media (max-width: 600px) {
             .console {
                 padding: 10px;
@@ -76,6 +83,9 @@
 </head>
 <body>
     <div class="console">
+        <div class="ascii-art" id="ascii-art">
+            <!-- ASCII art will be dynamically inserted here -->
+        </div>
         <div class="output" id="output">
             <!-- Console output will be dynamically inserted here -->
         </div>
@@ -84,19 +94,32 @@
         </div>
     </div>
     <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
         // Function to handle commands
         function handleCommand(command) {
             const output = document.getElementById('output');
+            const asciiArt = document.getElementById('ascii-art');
 
+            // Display the entered command
+            output.innerHTML += `<div>$ ${command}</div>\n`;
+
+            // Command handling
             switch(command.trim().toLowerCase()) {
-                case 'hyperfetch':
-                    // Simulate fetching system information
+                case 'console':
+                    // System information
                     const data = {
-                        OS: 'Linux',
-                        Browser: 'Chrome',
-                        Memory: '8GB',
-                        Resolution: '1920x1080',
-                        Editor: 'VSCode'
+                        OS: getUrlParameter('OS') || 'Unknown OS',
+                        Browser: getUrlParameter('Browser') || 'Unknown Browser',
+                        Memory: getUrlParameter('Memory') || 'Unknown Memory',
+                        Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
+                        Editor: getUrlParameter('Editor') || 'Unknown Editor'
                     };
 
                     let infoContent = '';
@@ -109,7 +132,7 @@
 
                 case 'help':
                     output.innerHTML += `<div>Available commands:</div>\n`;
-                    output.innerHTML += `<div>hyperfetch - Display system information</div>\n`;
+                    output.innerHTML += `<div>console - Display system information</div>\n`;
                     output.innerHTML += `<div>help - Display this help message</div>\n`;
                     break;
 
@@ -121,6 +144,13 @@
             // Scroll to the bottom of the output
             output.scrollTop = output.scrollHeight;
         }
+
+        // Set initial ASCII art
+        document.getElementById('ascii-art').innerHTML = `
+ /\_/\  
+( o.o ) 
+ > ^ <
+        `;
 
         // Event listener for the input field
         document.getElementById('input').addEventListener('keypress', function(event) {

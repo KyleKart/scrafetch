@@ -69,11 +69,6 @@
             color: #666;
         }
 
-        .ascii-art {
-            color: #6A9FB5;
-            margin-bottom: 10px;
-        }
-
         @media (max-width: 600px) {
             .console {
                 padding: 10px;
@@ -83,14 +78,11 @@
 </head>
 <body>
     <div class="console">
-        <div class="ascii-art" id="ascii-art">
-            <!-- ASCII art will be dynamically inserted here -->
-        </div>
-        <div class="output" id="output">
-            <!-- Console output will be dynamically inserted here -->
+        <div class="output" id="console-output">
+            <!-- Initial content and command output will appear here -->
         </div>
         <div class="input-container">
-            <span>$ </span><input type="text" id="input" class="input-field" placeholder="Type a command..." autofocus/>
+            <input type="text" id="console-input" class="input-field" placeholder="Type a command...">
         </div>
     </div>
     <script>
@@ -102,53 +94,44 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Function to fill in ASCII art and data
-        function fillData() {
-            const asciiArt = document.getElementById('ascii-art');
-            const output = document.getElementById('output');
+        // Function to handle console input
+        function handleInput(event) {
+            if (event.key === 'Enter') {
+                const inputField = document.getElementById('console-input');
+                const command = inputField.value.trim();
+                const output = document.getElementById('console-output');
+                
+                // Clear the input field
+                inputField.value = '';
 
-            const ascii = `
- /\_/\  
+                if (command === 'hyperfetch') {
+                    const asciiArt = getUrlParameter('ascii') || 
+`/\_/\  
 ( o.o ) 
  > ^ <`;
 
-            const data = {
-                OS: getUrlParameter('OS') || 'Unknown OS',
-                Browser: getUrlParameter('Browser') || 'Unknown Browser',
-                Memory: getUrlParameter('Memory') || 'Unknown Memory',
-                Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
-                Editor: getUrlParameter('Editor') || 'Unknown Editor'
-            };
+                    const data = {
+                        OS: getUrlParameter('OS') || 'Unknown OS',
+                        Browser: getUrlParameter('Browser') || 'Unknown Browser',
+                        Memory: getUrlParameter('Memory') || 'Unknown Memory',
+                        Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
+                        Editor: getUrlParameter('Editor') || 'Unknown Editor'
+                    };
 
-            asciiArt.innerHTML = ascii;
+                    let outputContent = `${asciiArt}\n\n`;
+                    for (const [key, value] of Object.entries(data)) {
+                        outputContent += `${key}: ${value}\n`;
+                    }
 
-            let outputContent = `> hyperfetch\n\n`;
-            for (const [key, value] of Object.entries(data)) {
-                outputContent += `${key}: ${value}\n`;
+                    output.textContent = outputContent;
+                } else {
+                    output.textContent = 'Unknown command. Try "hyperfetch".';
+                }
             }
-
-            output.innerHTML = outputContent;
         }
 
-        // Handle command input
-        document.getElementById('input').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                const command = event.target.value.trim();
-                if (command === 'hyperfetch') {
-                    fillData();
-                } else {
-                    const output = document.getElementById('output');
-                    output.innerHTML += `> ${command}: command not found\n`;
-                }
-                event.target.value = '';
-                event.target.focus(); // Keep focus on input field
-                // Scroll to the bottom of the output
-                output.scrollTop = output.scrollHeight;
-            }
-        });
-
-        // Initial data fill
-        fillData();
+        // Add event listener to handle input
+        document.getElementById('console-input').addEventListener('keydown', handleInput);
     </script>
 </body>
 </html>

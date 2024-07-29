@@ -31,9 +31,9 @@
             display: flex;
             flex-direction: column;
             padding: 20px;
-            overflow: auto;
             background-color: #2e2e2e;
             color: #c5c8c6;
+            border: 1px solid #333;
         }
 
         .output {
@@ -79,7 +79,7 @@
 <body>
     <div class="console">
         <div class="output" id="console-output">
-            <!-- Initial content and command output will appear here -->
+            <!-- Output will be dynamically inserted here -->
         </div>
         <div class="input-container">
             <input type="text" id="console-input" class="input-field" placeholder="Type a command...">
@@ -100,7 +100,7 @@
                 const inputField = document.getElementById('console-input');
                 const command = inputField.value.trim();
                 const output = document.getElementById('console-output');
-                
+
                 // Clear the input field
                 inputField.value = '';
 

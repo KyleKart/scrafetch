@@ -71,9 +71,7 @@
     <div class="scrafetch">
         <div class="ascii-art">
             <pre id="ascii-art">
- /\_/\  
-( o.o ) 
- > ^ <
+                <!-- ASCII art will be dynamically inserted here -->
             </pre>
         </div>
         <div class="info" id="info">
@@ -92,6 +90,7 @@
         // Function to fill in the data
         function fillData() {
             const info = document.getElementById('info');
+            const asciiArt = document.getElementById('ascii-art');
             const data = {
                 OS: getUrlParameter('OS') || 'Unknown OS',
                 Browser: getUrlParameter('Browser') || 'Unknown Browser',
@@ -99,6 +98,13 @@
                 Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
                 Editor: getUrlParameter('Editor') || 'Unknown Editor'
             };
+
+            // Set the ASCII art from URL parameter or default value
+            asciiArt.textContent = getUrlParameter('ASCII') || `
+ /\_/\  
+( o.o ) 
+ > ^ <
+            `;
 
             let infoContent = '';
             for (const [key, value] of Object.entries(data)) {

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperfetch</title>
+    <style>
+        /* Basic reset for padding and margins */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1e1e1e;
+            color: #c5c8c6;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        .hyperfetch {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            max-width: 100%; /* Ensure content fits within the viewport */
+            padding: 20px;
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        .ascii-art {
+            color: #6A9FB5;
+            margin-right: 20px;
+        }
+
+        .info {
+            line-height: 1.5;
+            color: #c5c8c6;
+            overflow: hidden; /* Prevent overflow within the info section */
+        }
+
+        .info div {
+            margin-bottom: 5px; /* Adjust spacing between lines */
+        }
+
+        .info b {
+            color: #f0f0f0; /* Ensure labels are visible */
+        }
+
+        @media (max-width: 600px) {
+            .hyperfetch {
+                flex-direction: column; /* Stack items vertically on small screens */
+                align-items: center; /* Center align content */
+                text-align: center; /* Center text for readability */
+            }
+
+            .ascii-art {
+                margin-right: 0; /* Remove margin on small screens */
+                margin-bottom: 10px; /* Add space below the ASCII art */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hyperfetch">
+        <div class="ascii-art">
+            <pre id="ascii-art">
+                <!-- ASCII art will be dynamically inserted here -->
+            </pre>
+        </div>
+        <div class="info" id="info">
+            <!-- Content will be dynamically inserted here -->
+        </div>
+    </div>
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Function to fill in the data
+        function fillData() {
+            const info = document.getElementById('info');
+            const asciiArt = document.getElementById('ascii-art');
+            const data = {
+                OS: getUrlParameter('OS') || 'Unknown OS',
+                Browser: getUrlParameter('Browser') || 'Unknown Browser',
+                Memory: getUrlParameter('Memory') || 'Unknown Memory',
+                Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
+                Editor: getUrlParameter('Editor') || 'Unknown Editor'
+            };
+
+            // Set the ASCII art from URL parameter or default value
+            asciiArt.textContent = getUrlParameter('ASCII') || `
+ /\_/\  
+( o.o ) 
+ > ^ <
+            `;
+
+            let infoContent = '';
+            for (const [key, value] of Object.entries(data)) {
+                infoContent += `<div><b>${key}:</b> ${value}</div>\n`;
+            }
+
+            info.innerHTML = infoContent;
+        }
+
+        // Call the function to fill in the data
+        fillData();
+    </script>
+</body>
+</html>

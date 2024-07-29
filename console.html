@@ -90,7 +90,7 @@
             <!-- Console output will be dynamically inserted here -->
         </div>
         <div class="input-container">
-            <span>$ </span><input type="text" id="input" class="input-field" placeholder="Type a command..."/>
+            <span>$ </span><input type="text" id="input" class="input-field" placeholder="Type a command..." autofocus/>
         </div>
     </div>
     <script>
@@ -102,64 +102,53 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Function to handle commands
-        function handleCommand(command) {
-            const output = document.getElementById('output');
+        // Function to fill in ASCII art and data
+        function fillData() {
             const asciiArt = document.getElementById('ascii-art');
+            const output = document.getElementById('output');
 
-            // Display the entered command
-            output.innerHTML += `<div>$ ${command}</div>\n`;
-
-            // Command handling
-            switch(command.trim().toLowerCase()) {
-                case 'console':
-                    // System information
-                    const data = {
-                        OS: getUrlParameter('OS') || 'Unknown OS',
-                        Browser: getUrlParameter('Browser') || 'Unknown Browser',
-                        Memory: getUrlParameter('Memory') || 'Unknown Memory',
-                        Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
-                        Editor: getUrlParameter('Editor') || 'Unknown Editor'
-                    };
-
-                    let infoContent = '';
-                    for (const [key, value] of Object.entries(data)) {
-                        infoContent += `${key}: ${value}\n`;
-                    }
-
-                    output.innerHTML += `<div>${infoContent}</div>\n`;
-                    break;
-
-                case 'help':
-                    output.innerHTML += `<div>Available commands:</div>\n`;
-                    output.innerHTML += `<div>console - Display system information</div>\n`;
-                    output.innerHTML += `<div>help - Display this help message</div>\n`;
-                    break;
-
-                default:
-                    output.innerHTML += `<div>Unknown command: ${command}</div>\n`;
-                    break;
-            }
-
-            // Scroll to the bottom of the output
-            output.scrollTop = output.scrollHeight;
-        }
-
-        // Set initial ASCII art
-        document.getElementById('ascii-art').innerHTML = `
+            const ascii = `
  /\_/\  
 ( o.o ) 
- > ^ <
-        `;
+ > ^ <`;
 
-        // Event listener for the input field
-        document.getElementById('input').addEventListener('keypress', function(event) {
+            const data = {
+                OS: getUrlParameter('OS') || 'Unknown OS',
+                Browser: getUrlParameter('Browser') || 'Unknown Browser',
+                Memory: getUrlParameter('Memory') || 'Unknown Memory',
+                Resolution: getUrlParameter('Resolution') || 'Unknown Resolution',
+                Editor: getUrlParameter('Editor') || 'Unknown Editor'
+            };
+
+            asciiArt.innerHTML = ascii;
+
+            let outputContent = `> hyperfetch\n\n`;
+            for (const [key, value] of Object.entries(data)) {
+                outputContent += `${key}: ${value}\n`;
+            }
+
+            output.innerHTML = outputContent;
+        }
+
+        // Handle command input
+        document.getElementById('input').addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
-                const command = event.target.value;
-                handleCommand(command);
-                event.target.value = ''; // Clear the input field
+                const command = event.target.value.trim();
+                if (command === 'hyperfetch') {
+                    fillData();
+                } else {
+                    const output = document.getElementById('output');
+                    output.innerHTML += `> ${command}: command not found\n`;
+                }
+                event.target.value = '';
+                event.target.focus(); // Keep focus on input field
+                // Scroll to the bottom of the output
+                output.scrollTop = output.scrollHeight;
             }
         });
+
+        // Initial data fill
+        fillData();
     </script>
 </body>
 </html>

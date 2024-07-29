@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperfetch Console</title>
+    <style>
+        /* Basic reset for padding and margins */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1e1e1e;
+            color: #c5c8c6;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        .console {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .output {
+            flex: 1;
+            background-color: #1e1e1e;
+            color: #c5c8c6;
+            padding: 10px;
+            border: 1px solid #333;
+            white-space: pre-wrap; /* Maintain whitespace and line breaks */
+            overflow-y: auto; /* Enable vertical scrolling if needed */
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            background-color: #2e2e2e;
+            border-top: 1px solid #333;
+        }
+
+        .input-field {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #c5c8c6;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            padding: 5px;
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .console {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="console">
+        <div class="output" id="output">
+            <!-- Console output will be dynamically inserted here -->
+        </div>
+        <div class="input-container">
+            <span>$ </span><input type="text" id="input" class="input-field" placeholder="Type a command..."/>
+        </div>
+    </div>
+    <script>
+        // Function to handle commands
+        function handleCommand(command) {
+            const output = document.getElementById('output');
+
+            switch(command.trim().toLowerCase()) {
+                case 'hyperfetch':
+                    // Simulate fetching system information
+                    const data = {
+                        OS: 'Linux',
+                        Browser: 'Chrome',
+                        Memory: '8GB',
+                        Resolution: '1920x1080',
+                        Editor: 'VSCode'
+                    };
+
+                    let infoContent = '';
+                    for (const [key, value] of Object.entries(data)) {
+                        infoContent += `${key}: ${value}\n`;
+                    }
+
+                    output.innerHTML += `<div>${infoContent}</div>\n`;
+                    break;
+
+                case 'help':
+                    output.innerHTML += `<div>Available commands:</div>\n`;
+                    output.innerHTML += `<div>hyperfetch - Display system information</div>\n`;
+                    output.innerHTML += `<div>help - Display this help message</div>\n`;
+                    break;
+
+                default:
+                    output.innerHTML += `<div>Unknown command: ${command}</div>\n`;
+                    break;
+            }
+
+            // Scroll to the bottom of the output
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Event listener for the input field
+        document.getElementById('input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                const command = event.target.value;
+                handleCommand(command);
+                event.target.value = ''; // Clear the input field
+            }
+        });
+    </script>
+</body>
+</html>
